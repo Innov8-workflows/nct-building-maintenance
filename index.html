@@ -1929,6 +1929,86 @@ footer {
   });
 })();
 
-</script>E html>
+</script>
+
+<script>
+
+// ── HERO SLIDESHOW ──
+let slide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.hero-dot');
+
+function goSlide(n) {
+  slides[slide].classList.remove('active');
+  dots[slide].classList.remove('active');
+  slide = n;
+  slides[slide].classList.add('active');
+  dots[slide].classList.add('active');
+}
+
+setInterval(() => goSlide((slide + 1) % slides.length), 5000);
+
+// ── MOBILE MENU ──
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// ── FAQ ──
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const answer = item.querySelector('.faq-a');
+  const isOpen = item.classList.contains('open');
+  
+  document.querySelectorAll('.faq-item.open').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-a').style.maxHeight = null;
+  });
+  
+  if (!isOpen) {
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+}
+
+// ── WHATSAPP FORM ──
+function sendWhatsApp() {
+  const fname = document.getElementById('fname').value.trim();
+  const lname = document.getElementById('lname').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const service = document.getElementById('service').value;
+  const location = document.getElementById('location').value.trim();
+  const message = document.getElementById('message').value.trim();
+
+  if (!fname || !phone || !service || !message) {
+    alert('Please fill in your name, phone number, service, and project details before sending.');
+    return;
+  }
+
+  const text = [
+    '\u{1F477} *New Quote Request \u2014 NCT Building & Maintenance*',
+    '',
+    '*Name:* ' + fname + ' ' + lname,
+    '*Phone:* ' + phone,
+    '*Service:* ' + service,
+    '*Location:* ' + (location || 'Not specified'),
+    '',
+    '*Project Details:*',
+    message
+  ].join('\n');
+
+  window.open('https://wa.me/447853308758?text=' + encodeURIComponent(text), '_blank');
+}
+
+// ── NAVBAR SCROLL ──
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  if (window.scrollY > 80) {
+    nav.style.boxShadow = '0 2px 30px rgba(0,0,0,0.5)';
+  } else {
+    nav.style.boxShadow = 'none';
+  }
+});
+
+</script>
 </body>
 </html>
